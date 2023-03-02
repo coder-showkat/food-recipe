@@ -11,7 +11,6 @@ const isLoading = (loading) => {
         document.body.style = 'overflow:auto';
     } else {
         spinner.classList.remove('hidden');
-        document.body.style = 'overflow:hidden;'
     }
 }
 
@@ -88,6 +87,7 @@ const modalYoutube = document.getElementById('modalYoutube');
 
 // display details
 const displayDetails = async (id) => {
+    isLoading(true);
     const data = await getDetails(id);
     console.log(data)
     const ingredients = [];
@@ -107,6 +107,7 @@ const displayDetails = async (id) => {
     modalInstruction.textContent = data.strInstructions;
     modalYoutube.textContent = data.strYoutube;
     modalYoutube.href = data.strYoutube;
+    isLoading(false);
 } 
 
 
