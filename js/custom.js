@@ -8,7 +8,6 @@ const spinner = document.querySelector('.spinner');
 const isLoading = (loading) => {
     if (!loading) {
         spinner.classList.add('hidden');
-        document.body.style = 'overflow:auto';
     } else {
         spinner.classList.remove('hidden');
     }
