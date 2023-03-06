@@ -88,7 +88,6 @@ const modalYoutube = document.getElementById('modalYoutube');
 const displayDetails = async (id) => {
     isLoading(true);
     const data = await getDetails(id);
-    console.log(data)
     const ingredients = [];
     for (prop in data) {
         if (prop.includes('strIngredient')){
@@ -98,14 +97,14 @@ const displayDetails = async (id) => {
         }
     }
 
-    modalTitle.textContent = data.strMeal;
-    modalImage.src = data.strMealThumb;
-    modalArea.textContent = data.strArea;
-    modalCategory.textContent = data.strCategory;
-    modalIngredient.textContent = `${ingredients.map(ingredient=>ingredient).join(', ')}.`;
-    modalInstruction.textContent = data.strInstructions;
-    modalYoutube.textContent = data.strYoutube;
-    modalYoutube.href = data.strYoutube;
+    modalTitle.textContent = await data.strMeal;
+    modalImage.src = await data.strMealThumb;
+    modalArea.textContent = await data.strArea;
+    modalCategory.textContent = await data.strCategory;
+    modalIngredient.textContent = await `${ingredients.map(ingredient=>ingredient).join(', ')}.`;
+    modalInstruction.textContent = await data.strInstructions;
+    modalYoutube.textContent = await data.strYoutube;
+    modalYoutube.href = await data.strYoutube;
     isLoading(false);
 } 
 
