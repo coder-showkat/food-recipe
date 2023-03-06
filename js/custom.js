@@ -4,7 +4,10 @@ const cart_container = document.getElementById('cart-container');
 const btn_showAll = document.getElementById('show-all');
 const category_name = document.getElementById('category-name');
 const spinner = document.querySelector('.spinner');
+const modal_body = document.getElementById('modal-body');
 
+
+// spinner event
 const isLoading = (loading) => {
     if (!loading) {
         spinner.classList.add('hidden');
@@ -74,14 +77,7 @@ const getDetails = async (id) => {
     }
 }
 
-// modal element selector
-const modalTitle = document.getElementById('modalTitle');
-const modalImage = document.getElementById('modalImage');
-const modalArea = document.getElementById('modalArea');
-const modalCategory = document.getElementById('modalCategory');
-const modalIngredient = document.getElementById('modalIngredient');
-const modalInstruction = document.getElementById('modalInstruction');
-const modalYoutube = document.getElementById('modalYoutube');
+
 
 
 // display details
@@ -97,14 +93,44 @@ const displayDetails = async (id) => {
         }
     }
 
-    modalTitle.textContent = await data.strMeal;
-    modalImage.src = await data.strMealThumb;
-    modalArea.textContent = await data.strArea;
-    modalCategory.textContent = await data.strCategory;
-    modalIngredient.textContent = await `${ingredients.map(ingredient=>ingredient).join(', ')}.`;
-    modalInstruction.textContent = await data.strInstructions;
-    modalYoutube.textContent = await data.strYoutube;
-    modalYoutube.href = await data.strYoutube;
+
+    modal_body.innerHTML = `
+    <div
+    class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+    <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">
+        ${data.strMeal}
+    </h5>
+    <button type="button"
+        class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+        data-te-modal-dismiss aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+</div>
+<div class="relative overflow-y-auto p-4">
+    <img id="modalImage" src="${data.strMealThumb}"
+        class="w-full rounded-md mb-4" alt="">
+    <p class="mb-2 font-semibold">Area: <span class="font-normal">${data.strArea}</span></p>
+    <p class="mb-2 font-semibold">Category: <span class="font-normal">${data.strCategory}</span></p>
+    <p class="mb-2 font-semibold">Ingredients: <span class="font-normal">${ingredients.map(ingredient=>ingredient).join(', ')}.</span>
+    </p>
+    <p class="mb-2 font-semibold">
+        Instructions: <span class="font-normal">${data.strInstructions}</span>
+    </p>
+    <p class="mb-2 font-semibold">Youtube: <a href="${data.strYoutube}" class="font-normal">${data.strYoutube}</a></p>
+</div>
+<div
+    class="flex flex-shrink-0 flex-wrap items-center justify-end rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50">
+    <button type="button"
+        class="inline-block rounded bg-primary-100 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+        data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
+        Close
+    </button>
+</div>
+    `;
+    
     isLoading(false);
 } 
 
